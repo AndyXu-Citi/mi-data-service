@@ -101,12 +101,12 @@ public class JwtTokenUtil {
     /**
      * 生成token
      *
-     * @param userDetails 用户详情
+     * @param userName 用户名
      * @return JWT token
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername());
+        return doGenerateToken(claims, userName);
     }
 
     /**

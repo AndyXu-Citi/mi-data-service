@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * @author marathon
  */
 @Data
-@TableName("event")
+@TableName("mi_event")
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;

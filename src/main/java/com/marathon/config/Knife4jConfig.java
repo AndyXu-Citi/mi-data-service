@@ -3,7 +3,6 @@ package com.marathon.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +24,6 @@ public class Knife4jConfig {
                         .contact(new Contact()
                                 .name("marathon")
                                 .email("marathon@example.com"))
-                        .termsOfService("http://localhost:8080/"));
+                        .termsOfService("http://localhost:8081/"));
     }
 }

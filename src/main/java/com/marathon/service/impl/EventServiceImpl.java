@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.Event;
-import com.marathon.domain.entity.EventItem;
-import com.marathon.mapper.EventItemMapper;
 import com.marathon.mapper.EventMapper;
 import com.marathon.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements EventService {
 
-    private final EventItemMapper eventItemMapper;
 
     @Override
     public R<?> getEventList(Event event, Integer pageNum, Integer pageSize) {
@@ -94,69 +91,10 @@ public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements
         if (eventId == null) {
             return R.fail("赛事ID不能为空");
         }
-        // 删除赛事项目
-        LambdaQueryWrapper<EventItem> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(EventItem::getEventId, eventId);
-        eventItemMapper.delete(queryWrapper);
         // 删除赛事
         boolean result = removeById(eventId);
         return result ? R.ok(true, "删除成功") : R.fail("删除失败");
     }
-
-    @Override
-    public R<List<EventItem>> getEventItemList(Long eventId) {
-        if (eventId == null) {
-            return R.fail("赛事ID不能为空");
-        }
-        LambdaQueryWrapper<EventItem> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(EventItem::getEventId, eventId)
-                .orderByAsc(EventItem::getCreateTime);
-        List<EventItem> eventItems = eventItemMapper.selectList(queryWrapper);
-        return R.ok(eventItems);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public R<Boolean> addEventItem(EventItem eventItem) {
-        if (eventItem == null || eventItem.getEventId() == null) {
-            return R.fail("参数不能为空");
-        }
-        // 检查赛事是否存在
-        Event event = getById(eventItem.getEventId());
-        if (event == null) {
-            return R.fail("赛事不存在");
-        }
-        // 设置默认值
-        eventItem.setCreateTime(LocalDateTime.now());
-        eventItem.setRegisteredNumber(0);
-        if (eventItem.getStatus() == null) {
-            eventItem.setStatus(1); // 默认开放
-        }
-        int result = eventItemMapper.insert(eventItem);
-        return result > 0 ? R.ok(true, "添加成功") : R.fail("添加失败");
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public R<Boolean> updateEventItem(EventItem eventItem) {
-        if (eventItem == null || eventItem.getItemId() == null) {
-            return R.fail("项目ID不能为空");
-        }
-        eventItem.setUpdateTime(LocalDateTime.now());
-        int result = eventItemMapper.updateById(eventItem);
-        return result > 0 ? R.ok(true, "更新成功") : R.fail("更新失败");
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public R<Boolean> deleteEventItem(Long itemId) {
-        if (itemId == null) {
-            return R.fail("项目ID不能为空");
-        }
-        int result = eventItemMapper.deleteById(itemId);
-        return result > 0 ? R.ok(true, "删除成功") : R.fail("删除失败");
-    }
-
     @Override
     public R<List<Event>> getHotEvents(Integer limit) {
         if (limit == null || limit <= 0) {

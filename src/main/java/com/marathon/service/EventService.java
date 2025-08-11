@@ -2,7 +2,6 @@ package com.marathon.service;
 
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.Event;
-import com.marathon.domain.entity.EventItem;
 
 import java.util.List;
 
@@ -55,37 +54,6 @@ public interface EventService {
      */
     R<Boolean> deleteEvent(Long eventId);
 
-    /**
-     * 获取赛事项目列表
-     *
-     * @param eventId 赛事ID
-     * @return 赛事项目列表
-     */
-    R<List<EventItem>> getEventItemList(Long eventId);
-
-    /**
-     * 添加赛事项目
-     *
-     * @param eventItem 赛事项目信息
-     * @return 添加结果
-     */
-    R<Boolean> addEventItem(EventItem eventItem);
-
-    /**
-     * 更新赛事项目
-     *
-     * @param eventItem 赛事项目信息
-     * @return 更新结果
-     */
-    R<Boolean> updateEventItem(EventItem eventItem);
-
-    /**
-     * 删除赛事项目
-     *
-     * @param itemId 项目ID
-     * @return 删除结果
-     */
-    R<Boolean> deleteEventItem(Long itemId);
 
     /**
      * 获取热门赛事
