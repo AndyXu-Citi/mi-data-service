@@ -133,10 +133,9 @@ public class JwtTokenUtil {
      * 验证token是否有效
      *
      * @param token JWT token
-     * @param userDetails 用户详情
      * @return 是否有效
      */
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean validateToken(String token) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
