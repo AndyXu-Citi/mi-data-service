@@ -68,11 +68,13 @@ public class JwtTokenUtil {
      * @return claims
      */
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder()
+        // 使用Jwts工具类解析token
+        return Jwts.parser()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
     }
 
     /**
@@ -130,7 +132,7 @@ public class JwtTokenUtil {
     /**
      * 验证token是否有效
      *
-     * @param token       JWT token
+     * @param token JWT token
      * @param userDetails 用户详情
      * @return 是否有效
      */

@@ -22,7 +22,7 @@
         <druid.version>1.2.20</druid.version>
         <mysql.version>8.3.0</mysql.version>
         <redis.version>3.4.3</redis.version>
-        <mongodb.version>3.4.3</mongodb.version>
+<!--        <mongodb.version>3.4.3</mongodb.version>-->
         <minio.version>8.5.7</minio.version>
         <jwt.version>0.12.5</jwt.version>
         <hutool.version>5.8.25</hutool.version>
@@ -90,10 +90,10 @@
         </dependency>
         
         <!-- MongoDB 依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+<!--        </dependency>-->
         
         <!-- MinIO 依赖 -->
         <dependency>
