@@ -27,6 +27,9 @@ public class JwtTokenUtil {
 
     @Value("${jwt.expiration}")
     private Long expiration;
+    private static final String TOKEN_PREFIX = "token:";
+    private static final String AUTHORIZATION_PREFIX = "Bearer";
+    private static final String AUTHORIZATION_SEPARATE = "@";
 
     /**
      * 从token中获取用户名
@@ -139,5 +142,9 @@ public class JwtTokenUtil {
         final String username = getUsernameFromToken(token);
 //        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
         return  !isTokenExpired(token);
+    }
+
+    public static String getTokenRedisKey(String userName) {
+        return String.format("%s%s", TOKEN_PREFIX, userName);
     }
 }

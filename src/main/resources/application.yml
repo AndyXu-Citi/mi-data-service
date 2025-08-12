@@ -2,7 +2,6 @@ server:
   port: 8081
   servlet:
     context-path: /api
-
 spring:
   application:
     name: mi-data-service
@@ -53,6 +52,10 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 20MB
+  security:
+    user:
+      name: admin
+      password: 123456
 
 # MyBatis Plus配置
 mybatis-plus:
@@ -81,6 +84,7 @@ jwt:
   expiration: 86400000  # 24小时
   header: Authorization
   token-start-with: Bearer 
+# spring security
 
 # Knife4j配置
 knife4j:

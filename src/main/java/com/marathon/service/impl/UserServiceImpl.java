@@ -40,10 +40,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq(User::getUsername, username);
         User user = getOne(queryWrapper);
 
-        // 用户不存在或密码错误
-//        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-//            return R.fail("用户名或密码错误");
-//        }
+//         用户不存在或密码错误
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+            return R.fail("用户名或密码错误");
+        }
 
         // 账号被停用
         if (user.getStatus() != null && user.getStatus() == 1) {
