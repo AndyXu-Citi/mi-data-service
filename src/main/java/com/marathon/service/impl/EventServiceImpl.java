@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.marathon.common.api.R;
+import com.marathon.common.util.JsonFileUtil;
 import com.marathon.domain.entity.Event;
+import com.marathon.domain.vo.EventResult;
 import com.marathon.mapper.EventMapper;
 import com.marathon.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,16 @@ public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements
         page(page, queryWrapper);
 
         return R.ok(page);
+    }
+
+    @Override
+    public R<?> getEventList() {
+        // 假设有一个event.json文件在类路径下
+        String jsonFilePath = "/eventResult.json";
+        EventResult eventResult = JsonFileUtil.readJsonFromClassPath(jsonFilePath, EventResult.class);
+
+        // 构造测试数据
+        return R.ok(eventResult);
     }
 
     @Override

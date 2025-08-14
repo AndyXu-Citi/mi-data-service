@@ -22,13 +22,21 @@ public class EventController {
 
     private final EventService eventService;
 
+//    /**
+//     * 获取赛事列表
+//     */
+//    @Operation(summary = "获取赛事列表", description = "分页获取赛事列表")
+//    @GetMapping("/list")
+//    public R<?> getEventList(Event event, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
+//        return eventService.getEventList(event, pageNum, pageSize);
+//    }
     /**
      * 获取赛事列表
      */
     @Operation(summary = "获取赛事列表", description = "分页获取赛事列表")
     @GetMapping("/list")
-    public R<?> getEventList(Event event, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
-        return eventService.getEventList(event, pageNum, pageSize);
+    public R<?> getEventList() {
+        return eventService.getEventList();
     }
 
     /**

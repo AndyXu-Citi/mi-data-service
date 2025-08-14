@@ -1,7 +1,16 @@
+select * from mi_event;
+select * from mi_user;
+select * from mi_favorite;
+
 -- 创建数据库
 CREATE DATABASE IF NOT EXISTS `marathon` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 USE `marathon`;
+
+-- 删除已存在的表
+DROP TABLE IF EXISTS `mi_favorite`;
+DROP TABLE IF EXISTS `mi_user`;
+DROP TABLE IF EXISTS `mi_event`;
 
 -- 用户表
 CREATE TABLE IF NOT EXISTS `mi_user` (
@@ -31,6 +40,8 @@ CREATE TABLE IF NOT EXISTS `mi_user` (
   KEY `idx_openid` (`openid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
+-- todo
+-- 赛事级别字段
 -- 赛事表
 CREATE TABLE IF NOT EXISTS `mi_event` (
   `event_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '赛事ID',
@@ -38,10 +49,13 @@ CREATE TABLE IF NOT EXISTS `mi_event` (
   `cover_image` varchar(255) DEFAULT NULL COMMENT '封面图片',
   `event_type` tinyint(1) DEFAULT '1' COMMENT '赛事类型（1马拉松 2半程马拉松 3健康跑 4越野跑 5其他）',
   `event_status` tinyint(1) DEFAULT '1' COMMENT '状态（1未开始 2报名中 3报名结束 4比赛中 5已结束）',
+  `event_level` tinyint(1) DEFAULT '1' COMMENT '赛事级别（1白金 2金标 3精英标 4标牌 5田协）',
   `start_time` datetime DEFAULT NULL COMMENT '开始时间',
   `end_time` datetime DEFAULT NULL COMMENT '结束时间',
   `registration_start_time` datetime DEFAULT NULL COMMENT '报名开始时间',
   `registration_end_time` datetime DEFAULT NULL COMMENT '报名结束时间',
+  `registration_link` varchar(255)  DEFAULT NULL COMMENT '报名链接',
+  `registration_qr_code` varchar(255)  DEFAULT NULL COMMENT '报名二维码',
   `location` varchar(100) DEFAULT NULL COMMENT '地点',
   `province` varchar(50) DEFAULT NULL COMMENT '省份',
   `city` varchar(50) DEFAULT NULL COMMENT '城市',

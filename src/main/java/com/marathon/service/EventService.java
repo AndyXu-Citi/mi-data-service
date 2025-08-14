@@ -21,6 +21,7 @@ public interface EventService {
      * @return 赛事列表
      */
     R<?> getEventList(Event event, Integer pageNum, Integer pageSize);
+    R<?> getEventList();
 
     /**
      * 获取赛事详情
