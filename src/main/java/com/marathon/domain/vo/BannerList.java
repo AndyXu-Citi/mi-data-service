@@ -6,4 +6,5 @@ import lombok.Data;
 public class BannerList {
     String image;
     String title;
+    Long eventId;
 }

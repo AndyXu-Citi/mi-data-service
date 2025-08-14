@@ -1,6 +1,7 @@
 package com.marathon.controller;
 
 import com.marathon.common.api.R;
+import com.marathon.domain.entity.Event;
 import com.marathon.service.FavoriteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "收藏管理", description = "收藏相关接口")
 @RestController
-@RequestMapping("/favorite")
+@RequestMapping("/favorites")
 @RequiredArgsConstructor
 public class FavoriteController {
 
@@ -25,9 +26,9 @@ public class FavoriteController {
      * 添加收藏
      */
     @Operation(summary = "添加收藏", description = "用户收藏赛事")
-    @PostMapping
-    public R<Boolean> addFavorite(@RequestParam Long userId, @RequestParam Long eventId) {
-        return favoriteService.addFavorite(userId, eventId);
+    @PostMapping("/{eventId}")
+    public R<Boolean> addFavorite( @PathVariable Long eventId) {
+        return favoriteService.addFavorite(1L, eventId);
     }
 
     /**
@@ -43,12 +44,11 @@ public class FavoriteController {
      * 获取用户收藏列表
      */
     @Operation(summary = "获取用户收藏列表", description = "获取用户收藏的赛事列表")
-    @GetMapping("/user/{userId}")
+    @GetMapping()
     public R<?> getUserFavorites(
-            @Parameter(description = "用户ID") @PathVariable Long userId,
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize) {
-        return favoriteService.getUserFavorites(userId, pageNum, pageSize);
+        return favoriteService.getUserFavorites(2L, pageNum, pageSize);
     }
 
     /**

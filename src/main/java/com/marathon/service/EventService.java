@@ -2,6 +2,7 @@ package com.marathon.service;
 
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.Event;
+import com.marathon.domain.vo.SearchParam;
 
 import java.util.List;
 
@@ -93,6 +94,7 @@ public interface EventService {
      * @return 搜索结果
      */
     R<?> searchEvents(String keyword, Integer type, Integer status, String province, String city, Integer pageNum, Integer pageSize);
+    R<?> searchEventsMock(SearchParam param);
 
     /**
      * 更新赛事状态

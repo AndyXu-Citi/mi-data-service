@@ -7,6 +7,8 @@ import com.marathon.common.api.R;
 import com.marathon.common.util.JsonFileUtil;
 import com.marathon.domain.entity.Event;
 import com.marathon.domain.vo.EventResult;
+import com.marathon.domain.vo.SearchParam;
+import com.marathon.domain.vo.SearchResult;
 import com.marathon.mapper.EventMapper;
 import com.marathon.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -163,6 +165,16 @@ public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements
         page(page, queryWrapper);
 
         return R.ok(page);
+    }
+
+    @Override
+    public R<?> searchEventsMock(SearchParam param) {
+        // 假设有一个event.json文件在类路径下
+        String jsonFilePath = "/searchResult.json";
+        SearchResult eventResult = JsonFileUtil.readJsonFromClassPath(jsonFilePath, SearchResult.class);
+
+        // 构造测试数据
+        return R.ok(eventResult);
     }
 
     @Override

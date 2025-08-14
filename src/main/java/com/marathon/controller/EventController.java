@@ -2,6 +2,7 @@ package com.marathon.controller;
 
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.Event;
+import com.marathon.domain.vo.SearchParam;
 import com.marathon.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "赛事管理", description = "赛事相关接口")
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
 
@@ -83,8 +84,19 @@ public class EventController {
     @Operation(summary = "获取热门赛事", description = "获取热门赛事列表")
     @GetMapping("/hot")
     public R<?> getHotEvents(@RequestParam(defaultValue = "5") Integer limit) {
-        return eventService.getHotEvents(limit);
+        return eventService.searchEventsMock(new SearchParam());
+//        return eventService.getHotEvents(limit);
     }
+
+    /**
+     * 搜索赛事
+     */
+    @Operation(summary = "搜索赛事", description = "搜索赛事")
+    @PostMapping("/search")
+    public R<?> searchEvents(@RequestBody SearchParam parameters) {
+        return eventService.searchEventsMock(parameters);
+    }
+
 
     /**
      * 获取推荐赛事
@@ -104,15 +116,15 @@ public class EventController {
         return eventService.getUpcomingEvents(limit);
     }
 
-    /**
-     * 搜索赛事
-     */
-    @Operation(summary = "搜索赛事", description = "根据关键词搜索赛事")
-    @GetMapping("/search")
-    public R<?> searchEvents(@RequestParam String keyword, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
+//    /**
+//     * 搜索赛事
+//     */
+//    @Operation(summary = "搜索赛事", description = "根据关键词搜索赛事")
+//    @GetMapping("/search")
+//    public R<?> searchEvents(@RequestParam String keyword, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
 //        return eventService.searchEvents(keyword, pageNum, pageSize);
-        return null;
-    }
+//        return null;
+//    }
 
     /**
      * 更新赛事状态

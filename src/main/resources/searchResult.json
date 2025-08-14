@@ -1,0 +1,54 @@
+{
+  "activeCondition": "",
+  "searchKeyword": "",
+  "searchHistory": [],
+  "hotKeywords": ["北京马拉松", "上海马拉松", "广州马拉松", "深圳马拉松", "杭州马拉松"],
+  "searchResults": [
+    {
+      "id": 1,
+      "title": "2024北京马拉松",
+      "date": "2024-10-20",
+      "location": "北京市",
+      "price": 200,
+      "image": "/static/images/events/beijing.jpg",
+      "status": "报名中"
+    },
+    {
+      "id": 2,
+      "title": "2024上海马拉松",
+      "date": "2024-11-10",
+      "location": "上海市",
+      "price": 180,
+      "image": "/static/images/events/shanghai.jpg",
+      "status": "报名中"
+    }
+  ],
+  "loading": false,
+  "loadStatus": "loadmore",
+  "showFilter": false,
+  "showResults": true,
+  "filter": {
+    "city": "",
+    "type": "",
+    "status": "",
+    "date": ""
+  },
+  "cityOptions": [
+    { "label": "全部", "value": "" },
+    { "label": "北京", "value": "北京" },
+    { "label": "上海", "value": "上海" },
+    { "label": "广州", "value": "广州" },
+    { "label": "深圳", "value": "深圳" }
+  ],
+  "typeOptions": [
+    { "label": "全部", "value": "" },
+    { "label": "全程马拉松", "value": "1" },
+    { "label": "半程马拉松", "value": "2" },
+    { "label": "健康跑", "value": "3" },
+    { "label": "越野跑", "value": "4" },
+    { "label": "其他", "value": "5" }
+  ],
+  "pageNum": 1,
+  "pageSize": 10,
+  "hasMore": true
+}
