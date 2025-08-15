@@ -65,6 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 调用微信API获取openid
         // 根据openid查询用户，不存在则创建
         // 生成token
+        System.out.println(code);
         return R.ok("token", "登录成功");
     }
 
