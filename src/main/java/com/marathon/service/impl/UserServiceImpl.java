@@ -129,6 +129,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return R.fail("参数不能为空");
         }
 
+
         // 查询用户
         User user = getById(userId);
         if (user == null) {
