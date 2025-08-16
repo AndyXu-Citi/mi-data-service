@@ -1,20 +1,35 @@
 package com.marathon.service.impl;
 
+import cn.hutool.json.JSONObject;
+import com.alibaba.druid.support.json.JSONUtils;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.marathon.common.api.R;
 import com.marathon.common.security.JwtTokenUtil;
+import com.marathon.domain.entity.Event;
 import com.marathon.domain.entity.User;
 import com.marathon.mapper.UserMapper;
 import com.marathon.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
+import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * 用户服务实现类
@@ -25,6 +40,19 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    // 微信小程序appid和secret（实际项目中建议配置在配置文件中）
+    private static final String APPID = "wx21a3d7f98708c369";
+    private static final String SECRET = "abe589b46239a194c8424329c18547a5";
+    private static final String WX_LOGIN_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code";
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private UserMapper userMapper; // 假设存在用户Mapper接口
+
+//    @Autowired
+//    private StringRedisTemplate redisTemplate;
     private final JwtTokenUtil jwtTokenUtil;
     private final PasswordEncoder passwordEncoder;
 
@@ -61,13 +89,58 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public R<String> wxLogin(String code) {
-        // 微信小程序登录逻辑
-        // 调用微信API获取openid
-        // 根据openid查询用户，不存在则创建
-        // 生成token
-        System.out.println(code);
-        return R.ok("token", "登录成功");
-    }
+        try {
+            // 1. 调用微信接口获取openid和session_key
+            String url = String.format(WX_LOGIN_URL, APPID, SECRET, code);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    new HttpEntity<>(new HttpHeaders()),
+                    String.class
+            );
+            log.error("微信小程序登录:" + response);
+            // 2. 解析微信返回结果
+            JSONObject result = (JSONObject) JSONUtils.parse(response.getBody());
+            String openid = result.get("openid").toString();
+
+            String sessionKey = result.get("session_key").toString();
+
+            // 检查是否有错误
+            if (result.containsKey("errcode")) {
+                String errMsg = result.get("errmsg").toString();
+                return R.fail("登录失败: " + errMsg);
+            }
+
+            // 3. 根据openid查询或创建用户
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getOpenid, openid);
+            User user = userMapper.selectOne(queryWrapper);
+            if (user == null) {
+                user = new User();
+                user.setOpenid(openid);
+                user.setCreateTime(LocalDateTime.now());
+                userMapper.insert(user); // 创建新用户
+            }
+
+            // 4. 生成token并存储到Redis
+            String token = UUID.randomUUID().toString().replaceAll("-", "");
+            // 将用户ID和sessionKey存入Redis，设置过期时间
+//            redisTemplate.opsForValue().set(
+//                    "token:" + token,
+//                    user.getId() + ":" + sessionKey,
+//                    7,
+//                    TimeUnit.DAYS
+//            );
+
+            // 5. 返回token给前端
+            return R.ok("token", token);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.fail("登录异常，请稍后重试");
+        }
+
+}
 
     @Override
     public R<User> getUserInfo(Long userId) {
