@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             // 加载用户详情
             CurrentUser userDetails = (CurrentUser) userDetailsService.loadUserByUsername(username);
 
-            Object token = redisTemplate.opsForValue().get(getTokenRedisKey(userDetails.getUsername()));
+            Object token = redisTemplate.opsForValue().get(getTokenRedisKey(userDetails.getOpenId()));
             if (Objects.isNull(token)) {
                 throw new BusinessException("请重新登录");
             }

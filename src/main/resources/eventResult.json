@@ -2,17 +2,17 @@
   "searchKeyword": "",
   "bannerList": [
     {
-      "image": "/static/images/banner1.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/155ac3e998914789b029ceb6db2449a4.jpg",
       "title": "2024北京马拉松",
       "eventId": 100
     },
     {
-      "image": "/static/images/banner2.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/c0a1e8a39d48443faf8f68d8ab4a7251.jpg",
       "title": "2024上海马拉松",
       "eventId": 101
     },
     {
-      "image": "/static/images/banner3.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/8e2c8f7d8fcc41c8b8ab0dd70c15a585.jpg",
       "title": "2024广州马拉松",
       "eventId": 102
     }
@@ -20,19 +20,19 @@
   "categoryList": [
     {
       "name": "白金标",
-      "icon": "/static/images/category/baijin.png"
+      "icon": "http://192.168.192.128:9000/marathon/category/2dfc18ef9b1647158aa8a025b2ecf15c.png"
     },
     {
       "name": "金标",
-      "icon": "/static/images/category/jin.png"
+      "icon": "http://192.168.192.128:9000/marathon/category/53f61f4391b044188226d66ebfbf0bc8.png"
     },
     {
       "name": "精英标",
-      "icon": "/static/images/category/jingying.png"
+      "icon": "http://192.168.192.128:9000/marathon/category/a0b7df2f7f5d4197a42feaab4a9bf66f.png"
     },
     {
       "name": "标牌",
-      "icon": "/static/images/category/biaopai.png"
+      "icon": "http://192.168.192.128:9000/marathon/category/87d148c7cf2d4b7aa3b9756b8c1cb493.png"
     }
   ],
   "hotEvents": [
@@ -42,7 +42,7 @@
       "date": "2024-10-20",
       "location": "北京市",
       "price": 200,
-      "image": "/static/images/events/beijing.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/155ac3e998914789b029ceb6db2449a4.jpg",
       "status": "报名中"
     },
     {
@@ -51,7 +51,7 @@
       "date": "2024-11-10",
       "location": "上海市",
       "price": 180,
-      "image": "/static/images/events/shanghai.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/c0a1e8a39d48443faf8f68d8ab4a7251.jpg",
       "status": "报名中"
     }
   ],
@@ -62,7 +62,7 @@
       "date": "2024-12-08",
       "location": "广州市",
       "price": 150,
-      "image": "/static/images/events/guangzhou.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/8e2c8f7d8fcc41c8b8ab0dd70c15a585.jpg",
       "status": "即将开始"
     },
     {
@@ -71,7 +71,7 @@
       "date": "2024-12-22",
       "location": "深圳市",
       "price": 160,
-      "image": "/static/images/events/shenzhen.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/ffd356a0933b475089c8692106aeb7f7.jpg",
       "status": "即将开始"
     }
   ]

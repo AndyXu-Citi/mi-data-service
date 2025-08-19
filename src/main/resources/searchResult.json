@@ -10,7 +10,7 @@
       "date": "2024-10-20",
       "location": "北京市",
       "price": 200,
-      "image": "/static/images/events/beijing.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/155ac3e998914789b029ceb6db2449a4.jpg",
       "status": "报名中"
     },
     {
@@ -19,7 +19,7 @@
       "date": "2024-11-10",
       "location": "上海市",
       "price": 180,
-      "image": "/static/images/events/shanghai.jpg",
+      "image": "http://192.168.192.128:9000/marathon/event/c0a1e8a39d48443faf8f68d8ab4a7251.jpg",
       "status": "报名中"
     }
   ],
