@@ -1,7 +1,7 @@
 package com.marathon.controller;
 
 import com.marathon.common.api.R;
-import com.marathon.common.util.FileUploadUtil;
+import com.marathon.util.FileUploadUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class FileController {
      */
     @Operation(summary = "上传文件", description = "上传文件到MinIO")
     @PostMapping("/upload")
-    public R<String> upload(@RequestParam("file") MultipartFile file) {
-        String url = fileUploadUtil.uploadFile(file);
+    public R<String> upload(@RequestParam("file") MultipartFile file,@RequestParam("folderName") String folderName) {
+        String url = fileUploadUtil.uploadFile(file, folderName);
         return R.ok(url, "上传成功");
     }
 }

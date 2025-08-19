@@ -1,8 +1,10 @@
 package com.marathon.controller;
 
 import com.marathon.common.api.R;
+import com.marathon.domain.entity.CurrentUser;
 import com.marathon.domain.entity.Event;
 import com.marathon.service.FavoriteService;
+import com.marathon.util.UserUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +30,8 @@ public class FavoriteController {
     @Operation(summary = "添加收藏", description = "用户收藏赛事")
     @PostMapping("/{eventId}")
     public R<Boolean> addFavorite( @PathVariable Long eventId) {
-        return favoriteService.addFavorite(1L, eventId);
+        CurrentUser currentUser = UserUtil.getCurrentUser();
+        return favoriteService.addFavorite(currentUser.getId(), eventId);
     }
 
     /**

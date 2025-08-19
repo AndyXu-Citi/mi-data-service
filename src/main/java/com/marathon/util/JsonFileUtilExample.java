@@ -1,4 +1,4 @@
-package com.marathon.common.util;
+package com.marathon.util;
 
 import com.marathon.domain.entity.Event;
 import lombok.extern.slf4j.Slf4j;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.marathon.common.api.R;
-import com.marathon.common.util.JsonFileUtil;
+import com.marathon.util.JsonFileUtil;
 import com.marathon.domain.entity.Event;
 import com.marathon.domain.vo.EventResult;
 import com.marathon.domain.vo.SearchParam;

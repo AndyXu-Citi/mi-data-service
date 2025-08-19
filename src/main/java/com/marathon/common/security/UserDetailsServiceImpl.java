@@ -30,7 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 根据用户名查询用户
         // 使用QueryWrapper查询用户（推荐方式，兼容性更好）
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", username); // 直接使用字符串字段名
+        // 微信小程序会通过OpenId去查找
+        queryWrapper.eq("openid", username); // 直接使用字符串字段名
         User user = userMapper.selectOne(queryWrapper);
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在");
@@ -41,6 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 user.getUserId(),
                 user.getUsername(),
                 user.getPassword(),
+                user.getOpenid(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")),
                 Lists.newArrayList("ROLE_USER"));
     }

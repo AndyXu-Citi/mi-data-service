@@ -2,6 +2,7 @@ package com.marathon.controller;
 
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.User;
+import com.marathon.domain.vo.UserInfo;
 import com.marathon.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,7 +37,7 @@ public class UserController {
      */
     @Operation(summary = "微信小程序登录", description = "通过微信授权码登录")
     @PostMapping("/wx-login")
-    public R<String> wxLogin(@RequestParam String code) {
+    public R<UserInfo> wxLogin(@RequestParam String code) {
         return userService.wxLogin(code);
     }
 

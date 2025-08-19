@@ -27,8 +27,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         // 允许所有人访问的接口
-                        .requestMatchers("/favorites/**", "/events/**","/user/**").permitAll()
-//                        .requestMatchers("/user/register", "/user/sendCode", "/user/login").permitAll()
+                        .requestMatchers("/favorites/**", "/events/**","/file/**","/user/**").permitAll()
+                        .requestMatchers("/event/**").permitAll()
+//                        .requestMatchers("/event/**", "/user/sendCode", "/user/login").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/doc.html").permitAll()
                         // 其他接口需要认证
                         .anyRequest().authenticated()

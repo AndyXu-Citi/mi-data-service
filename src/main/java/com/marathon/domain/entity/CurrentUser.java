@@ -18,6 +18,8 @@ public class CurrentUser implements UserDetails {
     private String username;
     @JsonIgnore
     private String password;
+    // 微信小程序openId
+    private String openId;
     private List<SimpleGrantedAuthority> authorities;
     /**
      * 角色信息
