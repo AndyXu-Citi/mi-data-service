@@ -1,4 +1,4 @@
-package com.marathon.application;
+package com.marathon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,9 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author marathon
  */
 @SpringBootApplication
-@ComponentScan({"com.marathon"})
 public class MarathonApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MarathonApplication.class, args);
     }

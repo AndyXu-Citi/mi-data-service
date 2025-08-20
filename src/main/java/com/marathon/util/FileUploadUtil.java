@@ -1,4 +1,4 @@
-package com.marathon.common.util;
+package com.marathon.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 文件上传工具类
@@ -34,32 +35,39 @@ public class FileUploadUtil {
      * @param file 文件
      * @return 文件访问路径
      */
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file, String folderName) {
         try {
-            // 检查文件
-            checkFile(file);
-
             // 检查存储桶是否存在
-            checkBucket();
+            boolean bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
+                    .bucket(minioConfig.getBucketName())
+                    .build());
+
+            // 如果不存在则创建
+            if (!bucketExists) {
+                minioClient.makeBucket(MakeBucketArgs.builder()
+                        .bucket(minioConfig.getBucketName())
+                        .build());
+            }
 
             // 生成文件名
-            String fileName = generateFileName(file);
+            String originalFilename = file.getOriginalFilename();
+            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String objectName = folderName + "/" + UUID.randomUUID().toString().replaceAll("-", "") + fileExtension;
 
             // 上传文件
-            InputStream inputStream = file.getInputStream();
-            PutObjectArgs args = PutObjectArgs.builder()
+            minioClient.putObject(PutObjectArgs.builder()
                     .bucket(minioConfig.getBucketName())
-                    .object(fileName)
+                    .object(objectName)
+                    .stream(file.getInputStream(), file.getSize(), -1)
                     .contentType(file.getContentType())
-                    .stream(inputStream, file.getSize(), -1)
-                    .build();
-            minioClient.putObject(args);
+                    .build());
 
-            // 返回文件访问路径
-            return minioConfig.getEndpoint() + "/" + minioConfig.getBucketName() + "/" + fileName;
+            // 返回文件访问URL
+            return minioConfig.getEndpoint() + "/" + minioConfig.getBucketName() + "/" + objectName;
+
         } catch (Exception e) {
             log.error("文件上传失败", e);
-            throw new ServiceException("文件上传失败: " + e.getMessage());
+            throw new RuntimeException("文件上传失败: " + e.getMessage());
         }
     }
 

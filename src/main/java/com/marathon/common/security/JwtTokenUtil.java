@@ -27,6 +27,9 @@ public class JwtTokenUtil {
 
     @Value("${jwt.expiration}")
     private Long expiration;
+    private static final String TOKEN_PREFIX = "token:";
+    private static final String AUTHORIZATION_PREFIX = "Bearer";
+    private static final String AUTHORIZATION_SEPARATE = "@";
 
     /**
      * 从token中获取用户名
@@ -101,12 +104,12 @@ public class JwtTokenUtil {
     /**
      * 生成token
      *
-     * @param userDetails 用户详情
+     * @param userName 用户名
      * @return JWT token
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername());
+        return doGenerateToken(claims, userName);
     }
 
     /**
@@ -125,7 +128,7 @@ public class JwtTokenUtil {
                 .setSubject(subject)
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -137,6 +140,11 @@ public class JwtTokenUtil {
      */
     public Boolean validateToken(String token) {
         final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return  !isTokenExpired(token);
+    }
+
+    public static String getTokenRedisKey(String userName) {
+        return String.format("%s%s", TOKEN_PREFIX, userName);
     }
 }

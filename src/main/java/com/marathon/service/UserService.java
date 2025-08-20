@@ -2,6 +2,7 @@ package com.marathon.service;
 
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.User;
+import com.marathon.domain.vo.UserInfo;
 
 /**
  * 用户服务接口
@@ -25,7 +26,7 @@ public interface UserService {
      * @param code 微信授权码
      * @return 登录结果
      */
-    R<String> wxLogin(String code);
+    R<UserInfo> wxLogin(String code);
 
     /**
      * 获取用户信息

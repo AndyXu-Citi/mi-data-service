@@ -1,0 +1,78 @@
+{
+  "searchKeyword": "",
+  "bannerList": [
+    {
+      "image": "http://192.168.192.128:9000/marathon/event/155ac3e998914789b029ceb6db2449a4.jpg",
+      "title": "2024北京马拉松",
+      "eventId": 100
+    },
+    {
+      "image": "http://192.168.192.128:9000/marathon/event/c0a1e8a39d48443faf8f68d8ab4a7251.jpg",
+      "title": "2024上海马拉松",
+      "eventId": 101
+    },
+    {
+      "image": "http://192.168.192.128:9000/marathon/event/8e2c8f7d8fcc41c8b8ab0dd70c15a585.jpg",
+      "title": "2024广州马拉松",
+      "eventId": 102
+    }
+  ],
+  "categoryList": [
+    {
+      "name": "白金标",
+      "icon": "http://192.168.192.128:9000/marathon/category/2dfc18ef9b1647158aa8a025b2ecf15c.png"
+    },
+    {
+      "name": "金标",
+      "icon": "http://192.168.192.128:9000/marathon/category/53f61f4391b044188226d66ebfbf0bc8.png"
+    },
+    {
+      "name": "精英标",
+      "icon": "http://192.168.192.128:9000/marathon/category/a0b7df2f7f5d4197a42feaab4a9bf66f.png"
+    },
+    {
+      "name": "标牌",
+      "icon": "http://192.168.192.128:9000/marathon/category/87d148c7cf2d4b7aa3b9756b8c1cb493.png"
+    }
+  ],
+  "hotEvents": [
+    {
+      "id": 1,
+      "title": "2024北京马拉松",
+      "date": "2024-10-20",
+      "location": "北京市",
+      "price": 200,
+      "image": "http://192.168.192.128:9000/marathon/event/155ac3e998914789b029ceb6db2449a4.jpg",
+      "status": "报名中"
+    },
+    {
+      "id": 2,
+      "title": "2024上海马拉松",
+      "date": "2024-11-10",
+      "location": "上海市",
+      "price": 180,
+      "image": "http://192.168.192.128:9000/marathon/event/c0a1e8a39d48443faf8f68d8ab4a7251.jpg",
+      "status": "报名中"
+    }
+  ],
+  "upComingEvents": [
+    {
+      "id": 3,
+      "title": "2024广州马拉松",
+      "date": "2024-12-08",
+      "location": "广州市",
+      "price": 150,
+      "image": "http://192.168.192.128:9000/marathon/event/8e2c8f7d8fcc41c8b8ab0dd70c15a585.jpg",
+      "status": "即将开始"
+    },
+    {
+      "id": 4,
+      "title": "2024深圳马拉松",
+      "date": "2024-12-22",
+      "location": "深圳市",
+      "price": 160,
+      "image": "http://192.168.192.128:9000/marathon/event/ffd356a0933b475089c8692106aeb7f7.jpg",
+      "status": "即将开始"
+    }
+  ]
+}

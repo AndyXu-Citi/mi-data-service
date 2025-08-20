@@ -2,12 +2,13 @@ package com.marathon.controller;
 
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.Event;
-import com.marathon.domain.entity.EventItem;
+import com.marathon.domain.vo.SearchParam;
 import com.marathon.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -17,19 +18,27 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "赛事管理", description = "赛事相关接口")
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventController {
 
     private final EventService eventService;
-
+    private final RedisTemplate<String, Object> redisTemplate;
+//    /**
+//     * 获取赛事列表
+//     */
+//    @Operation(summary = "获取赛事列表", description = "分页获取赛事列表")
+//    @GetMapping("/list")
+//    public R<?> getEventList(Event event, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
+//        return eventService.getEventList(event, pageNum, pageSize);
+//    }
     /**
      * 获取赛事列表
      */
     @Operation(summary = "获取赛事列表", description = "分页获取赛事列表")
     @GetMapping("/list")
-    public R<?> getEventList(Event event, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
-        return eventService.getEventList(event, pageNum, pageSize);
+    public R<?> getEventList() {
+        return eventService.getEventList();
     }
 
     /**
@@ -38,6 +47,8 @@ public class EventController {
     @Operation(summary = "获取赛事详情", description = "根据赛事ID获取赛事详情")
     @GetMapping("/{eventId}")
     public R<Event> getEventDetail(@Parameter(description = "赛事ID") @PathVariable Long eventId) {
+        redisTemplate.opsForValue().set("test","andy");
+        System.out.println("test:-->" + redisTemplate.opsForValue().get("test"));
         return eventService.getEventDetail(eventId);
     }
 
@@ -68,41 +79,7 @@ public class EventController {
         return eventService.deleteEvent(eventId);
     }
 
-    /**
-     * 获取赛事项目列表
-     */
-    @Operation(summary = "获取赛事项目列表", description = "根据赛事ID获取赛事项目列表")
-    @GetMapping("/{eventId}/items")
-    public R<?> getEventItems(@Parameter(description = "赛事ID") @PathVariable Long eventId) {
-        return eventService.getEventItems(eventId);
-    }
 
-    /**
-     * 添加赛事项目
-     */
-    @Operation(summary = "添加赛事项目", description = "添加赛事项目")
-    @PostMapping("/item")
-    public R<Boolean> addEventItem(@RequestBody EventItem eventItem) {
-        return eventService.addEventItem(eventItem);
-    }
-
-    /**
-     * 更新赛事项目
-     */
-    @Operation(summary = "更新赛事项目", description = "更新赛事项目信息")
-    @PutMapping("/item")
-    public R<Boolean> updateEventItem(@RequestBody EventItem eventItem) {
-        return eventService.updateEventItem(eventItem);
-    }
-
-    /**
-     * 删除赛事项目
-     */
-    @Operation(summary = "删除赛事项目", description = "根据项目ID删除赛事项目")
-    @DeleteMapping("/item/{itemId}")
-    public R<Boolean> deleteEventItem(@Parameter(description = "项目ID") @PathVariable Long itemId) {
-        return eventService.deleteEventItem(itemId);
-    }
 
     /**
      * 获取热门赛事
@@ -110,8 +87,19 @@ public class EventController {
     @Operation(summary = "获取热门赛事", description = "获取热门赛事列表")
     @GetMapping("/hot")
     public R<?> getHotEvents(@RequestParam(defaultValue = "5") Integer limit) {
-        return eventService.getHotEvents(limit);
+        return eventService.searchEventsMock(new SearchParam());
+//        return eventService.getHotEvents(limit);
     }
+
+    /**
+     * 搜索赛事
+     */
+    @Operation(summary = "搜索赛事", description = "搜索赛事")
+    @PostMapping("/search")
+    public R<?> searchEvents(@RequestBody SearchParam parameters) {
+        return eventService.searchEventsMock(parameters);
+    }
+
 
     /**
      * 获取推荐赛事
@@ -119,7 +107,7 @@ public class EventController {
     @Operation(summary = "获取推荐赛事", description = "获取推荐赛事列表")
     @GetMapping("/recommend")
     public R<?> getRecommendEvents(@RequestParam(defaultValue = "5") Integer limit) {
-        return eventService.getRecommendEvents(limit);
+        return eventService.getRecommendedEvents(limit);
     }
 
     /**
@@ -131,14 +119,15 @@ public class EventController {
         return eventService.getUpcomingEvents(limit);
     }
 
-    /**
-     * 搜索赛事
-     */
-    @Operation(summary = "搜索赛事", description = "根据关键词搜索赛事")
-    @GetMapping("/search")
-    public R<?> searchEvents(@RequestParam String keyword, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
-        return eventService.searchEvents(keyword, pageNum, pageSize);
-    }
+//    /**
+//     * 搜索赛事
+//     */
+//    @Operation(summary = "搜索赛事", description = "根据关键词搜索赛事")
+//    @GetMapping("/search")
+//    public R<?> searchEvents(@RequestParam String keyword, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "10") Integer pageSize) {
+//        return eventService.searchEvents(keyword, pageNum, pageSize);
+//        return null;
+//    }
 
     /**
      * 更新赛事状态

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @author marathon
  */
 @Data
-@TableName("favorite")
+@TableName("mi_favorite")
 public class Favorite implements Serializable {
 
     private static final long serialVersionUID = 1L;
