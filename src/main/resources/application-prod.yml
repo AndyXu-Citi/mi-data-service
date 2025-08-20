@@ -3,9 +3,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/marathon?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://39.96.167.56:3306/marathon?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
-    password: xuzhenyu123
+    password: xuzhenyu1234
     druid:
       initial-size: 5
       min-idle: 10
@@ -28,9 +28,9 @@ spring:
   # Redis配置
   data:
     redis:
-      host: localhost
+      host: 39.96.167.56
       port: 6379
-      password:
+      password: xuzhenyu123
       database: 0
       timeout: 10s
       lettuce:
@@ -45,7 +45,7 @@ spring:
 
 # MinIO配置
 minio:
-  endpoint: http://localhost:9000
+  endpoint: http://39.96.167.56:9000
   accessKey: minioadmin
   secretKey: minioadmin
   bucketName: marathon

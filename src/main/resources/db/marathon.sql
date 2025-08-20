@@ -1,7 +1,3 @@
-select * from mi_event;
-select * from mi_user;
-select * from mi_favorite;
-
 -- 创建数据库
 CREATE DATABASE IF NOT EXISTS `marathon` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 

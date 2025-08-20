@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class EventController {
 
     private final EventService eventService;
-
+    private final RedisTemplate<String, Object> redisTemplate;
 //    /**
 //     * 获取赛事列表
 //     */
@@ -46,6 +47,8 @@ public class EventController {
     @Operation(summary = "获取赛事详情", description = "根据赛事ID获取赛事详情")
     @GetMapping("/{eventId}")
     public R<Event> getEventDetail(@Parameter(description = "赛事ID") @PathVariable Long eventId) {
+        redisTemplate.opsForValue().set("test","andy");
+        System.out.println("test:-->" + redisTemplate.opsForValue().get("test"));
         return eventService.getEventDetail(eventId);
     }
 
