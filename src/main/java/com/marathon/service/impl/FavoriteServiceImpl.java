@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.marathon.common.api.R;
+import com.marathon.common.mapStrcut.EventMapperStruct;
 import com.marathon.domain.entity.Event;
 import com.marathon.domain.entity.Favorite;
+import com.marathon.domain.vo.EventVO;
 import com.marathon.mapper.EventMapper;
 import com.marathon.mapper.FavoriteMapper;
 import com.marathon.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,8 @@ import java.util.List;
 public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> implements FavoriteService {
 
     private final EventMapper eventMapper;
+    @Autowired
+    private EventMapperStruct eventMapperStruct;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -112,19 +117,24 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         page(page, queryWrapper);
 
         // 获取赛事详情
-        List<Event> eventList = new ArrayList<>();
+//        List<Event> eventList = new ArrayList<>();
+        List<EventVO> favoriteEventList = new ArrayList<>();
         for (Favorite favorite : page.getRecords()) {
             Event event = eventMapper.selectById(favorite.getEventId());
             if (event != null) {
-                eventList.add(event);
+                EventVO eventVO =eventMapperStruct.toVO(event);
+                favoriteEventList.add(eventVO);
             }
         }
-
         // 构建返回结果
-        Page<Event> resultPage = new Page<>(pageNum, pageSize, page.getTotal());
-        resultPage.setRecords(eventList);
+//        Page<Event> resultPage = new Page<>(pageNum, pageSize, page.getTotal());
+//        resultPage.setRecords(eventList);
 
-        return R.ok(resultPage);
+        return R.ok(favoriteEventList);
+    }
+
+    private EventVO covert(Event event) {
+        return null;
     }
 
     @Override
