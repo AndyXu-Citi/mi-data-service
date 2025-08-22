@@ -129,14 +129,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
             // 4. 生成token并存储到Redis
             String token = jwtTokenUtil.generateToken(openid);
-
-            //将用户ID和sessionKey存入Redis，设置过期时间
-//            redisTemplate.opsForValue().set(
-//                    "token:" + token,
-//                    user.getUserId() + ":" + sessionKey,
-//                    7,
-//                    TimeUnit.DAYS
-//            );
             redisTemplate.opsForValue().set(getTokenRedisKey(user.getOpenid()), token, expiration, TimeUnit.SECONDS);
 
             UserInfo userInfo = new UserInfo();

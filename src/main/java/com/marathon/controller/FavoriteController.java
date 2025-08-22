@@ -50,16 +50,18 @@ public class FavoriteController {
     @GetMapping()
     public R<?> getUserFavorites(
             @RequestParam(defaultValue = "1") Integer pageNum,
-            @RequestParam(defaultValue = "10") Integer pageSize) {
-        return favoriteService.getUserFavorites(2L, pageNum, pageSize);
+            @RequestParam(defaultValue = "10000") Integer pageSize) {
+        CurrentUser currentUser = UserUtil.getCurrentUser();
+        return favoriteService.getUserFavorites(currentUser.getId(), pageNum, pageSize);
     }
 
     /**
      * 检查是否已收藏
      */
     @Operation(summary = "检查是否已收藏", description = "检查用户是否已收藏赛事")
-    @GetMapping("/check")
-    public R<Boolean> checkFavorite(@RequestParam Long userId, @RequestParam Long eventId) {
-        return favoriteService.checkFavorite(userId, eventId);
+    @GetMapping("/check/{eventId}")
+    public R<Boolean> checkFavorite(@PathVariable Long eventId) {
+        CurrentUser currentUser = UserUtil.getCurrentUser();
+        return favoriteService.checkFavorite(currentUser.getId(), eventId);
     }
 }
