@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 赛事控制器
@@ -145,5 +146,15 @@ public class EventController {
     @PutMapping("/view/{eventId}")
     public R<Boolean> incrementViewCount(@Parameter(description = "赛事ID") @PathVariable Long eventId) {
         return eventService.incrementViewCount(eventId);
+    }
+
+    /**
+     * 上传文件
+     */
+    @Operation(summary = "上传文件管理到eventId", description = "上传文件到MinIO")
+    @PostMapping("/uploadImageByEventId")
+    public R<String> upload(@RequestParam("file") MultipartFile file, @RequestParam("folderName") String folderName, @RequestParam("eventId") Long eventId) {
+        String url = eventService.handleUpload(file, folderName, eventId);
+        return R.ok(url, "上传成功");
     }
 }

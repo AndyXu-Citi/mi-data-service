@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.marathon.common.api.R;
+import com.marathon.util.FileUploadUtil;
 import com.marathon.util.JsonFileUtil;
 import com.marathon.domain.entity.Event;
 import com.marathon.domain.vo.EventResult;
@@ -12,9 +13,11 @@ import com.marathon.domain.vo.SearchResult;
 import com.marathon.mapper.EventMapper;
 import com.marathon.service.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +31,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements EventService {
 
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
 
     @Override
     public R<?> getEventList(Event event, Integer pageNum, Integer pageSize) {
@@ -204,5 +209,15 @@ public class EventServiceImpl extends ServiceImpl<EventMapper, Event> implements
         event.setViewCount(event.getViewCount() + 1);
         boolean result = updateById(event);
         return result ? R.ok(true) : R.fail("更新失败");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String handleUpload(MultipartFile file, String folderName, Long eventId) {
+        String url = fileUploadUtil.uploadFile(file, folderName);
+        Event currentEvent = this.getById(eventId);
+        currentEvent.setCoverImage(url);
+        this.updateEvent(currentEvent);
+        return url;
     }
 }

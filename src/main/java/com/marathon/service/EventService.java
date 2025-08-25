@@ -3,6 +3,7 @@ package com.marathon.service;
 import com.marathon.common.api.R;
 import com.marathon.domain.entity.Event;
 import com.marathon.domain.vo.SearchParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -112,4 +113,6 @@ public interface EventService {
      * @return 更新结果
      */
     R<Boolean> incrementViewCount(Long eventId);
+
+    String handleUpload(MultipartFile file, String folderName, Long eventId);
 }
